@@ -1,19 +1,21 @@
 <template>
   <div class="gallery">
-    <BigImg :image="img" @rm="runModal($event)"/>
+    <div class="bigImg">
+      <img :src="img" class="img-item" @click="showComplexModal"/>
+    </div>
     <ThumbnailBar :images="items" @selectedImg="showImg($event)"/>
-    <Modal v-show="showModal" :image="img" @closeModel="runModal($event)"/>
+    <ComplexModal/>
   </div>
 </template>
 
 <script>
 import ThumbnailBar from '../components/gallery/ThumbnailBar.vue'
-import BigImg from "~/components/gallery/BigImg.vue";
 import Modal from "~/components/modals/modal.vue";
+import ComplexModal from "~/components/modals/ComplexModal";
 
 export default {
   name: 'GalleryPage',
-  components: {BigImg, ThumbnailBar, Modal},
+  components: {ThumbnailBar, Modal, ComplexModal},
   data() {
     return {
       items: [
@@ -28,7 +30,6 @@ export default {
       ],
 
       img: 'https://cdn.pixabay.com/photo/2018/12/15/00/05/winter-3876098_960_720.jpg',
-      showModal: false
     }
   },
 
@@ -36,8 +37,8 @@ export default {
     showImg(url) {
       this.img = url
     },
-    runModal(e) {
-      this.showModal = e
+    showComplexModal() {
+      this.$nuxt.$emit('showComplexModal', this.items, this.items.indexOf(this.img))
     }
   }
 }
@@ -45,5 +46,15 @@ export default {
 <style scoped>
 .gallery {
   background-color: #415a77;
+}
+
+.bigImg {
+  display: flex;
+  justify-content: center;
+}
+
+.img-item {
+  max-height: 350px;
+  cursor: pointer;
 }
 </style>

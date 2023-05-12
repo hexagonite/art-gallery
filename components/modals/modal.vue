@@ -45,7 +45,6 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
   transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
